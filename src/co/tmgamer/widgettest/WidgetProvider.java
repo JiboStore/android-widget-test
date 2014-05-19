@@ -30,12 +30,12 @@ public class WidgetProvider extends AppWidgetProvider {
 		Toast.makeText( context, "WidgetProvider.onReceive " + intent.getAction(), Toast.LENGTH_LONG );
 		
 		Bundle pExtra = intent.getExtras();
-		if ( pExtra != null ) {
+		if ( pExtra != null && intent.getAction().equals("WIDGET_PROVIDER_CLICKED") ) {
 			SharedPreferences pref = context.getApplicationContext().getSharedPreferences("widget_pref", Context.MODE_PRIVATE );
 			SharedPreferences.Editor edit = pref.edit();
 			int iWidgetId = intent.getExtras().getInt("widgetId");
 			int iCount = pref.getInt("widgetCount", 0);
-			for ( int i = 0; i < 10; i++ ) {
+			for ( int i = 0; i < 1; i++ ) {
 				iCount = pref.getInt("widgetCount", 0);
 				iCount++;
 				edit.putInt("widgetCount", iCount);
@@ -70,6 +70,7 @@ public class WidgetProvider extends AppWidgetProvider {
 		// http://stackoverflow.com/questions/10572813/android-widget-not-responding-to-touches/10573051#10573051
 		for ( int i = 0; i < appWidgetIds.length; i++ ) {
 			Integer widgetId = appWidgetIds[i];
+			Log.w( TAG, "WidgetProvider.onUpdate " + widgetId );
 			
 			RemoteViews remoteViews = new RemoteViews( context.getPackageName(), R.layout.widget_layout );
 			remoteViews.setTextViewText( R.id.hellotextview, "WIDGET_PROVIDER_CLICKED" );
